@@ -41,25 +41,25 @@ static const char *fonts[]               = { "FantasqueSansMono Nerd Font:size=1
 static const char dmenufont[]            = "FantasqueSansMono Nerd Font:size=10";
 
 
-//static char black[] = "#15161e";
-//static char gray[] = "#414868";
-//static char white[] = "#c0caf6";
-//static char blue[] = "#72aaf7";
-//static char red[] = "#f7768e";
-//static char yellow[] = "#e0af68";
-//static char green[] = "#9ece6a";
-//static char purple[] = "#bb9af7";
-//static char cyan[] = "#7dcfff";
+static char black[] = "#15161e";
+static char gray[] = "#414868";
+static char white[] = "#c0caf6";
+static char blue[] = "#72aaf7";
+static char red[] = "#f7768e";
+static char yellow[] = "#e0af68";
+static char green[] = "#9ece6a";
+static char purple[] = "#bb9af7";
+static char cyan[] = "#7dcfff";
 
-static char black[] = "#1e1e2e";
-static char gray[] = "#585b70";
-static char white[] = "#bac2de";
-static char blue[] = "#89b4fa";
-static char red[] = "#f38ba8";
-static char yellow[] = "#f9e2af";
-static char green[] = "#a6e6a1";
-static char purple[] = "#f5c2e7";
-static char cyan[] = "#94e2d5";
+//static char black[] = "#1e1e2e";
+//static char gray[] = "#585b70";
+//static char white[] = "#bac2de";
+//static char blue[] = "#89b4fa";
+//static char red[] = "#f38ba8";
+//static char yellow[] = "#f9e2af";
+//static char green[] = "#a6e6a1";
+//static char purple[] = "#f5c2e7";
+//static char cyan[] = "#94e2d5";
 
 static const unsigned int baralpha = OPAQUE;
 static const unsigned int borderalpha = OPAQUE;
@@ -128,7 +128,7 @@ static char *tagicons[][NUMTAGS] =
 {
 	[DEFAULT_TAGS]        = { "1", "2", "3", "4", "5", "6", "7", "8", "9" },
 	[ALTERNATIVE_TAGS]    = { "A", "B", "C", "D", "E", "F", "G", "H", "I" },
-	[ALT_TAGS_DECORATION] = { "<1>", "<2>", "<3>", "<4>", "<5>", "<6>", "<7>", "<8>", "<9>" },
+  [ALT_TAGS_DECORATION] = { "<1>", "<2>", "<3>", "<4>", "<5>", "<6>", "<7>", "<8>", "<9>" },
 };
 
 
@@ -186,7 +186,7 @@ static const BarRule barrules[] = {
 	{ -1,        0,     BAR_ALIGN_LEFT,   width_stbutton,           draw_stbutton,          click_stbutton,          NULL,                    "statusbutton" },
 	{ -1,        0,     BAR_ALIGN_LEFT,   width_tags,               draw_tags,              click_tags,              hover_tags,              "tags" },
 	{  0,        0,     BAR_ALIGN_RIGHT,  width_systray,            draw_systray,           click_systray,           NULL,                    "systray" },
-	{ -1,        0,     BAR_ALIGN_LEFT,   width_ltsymbol,           draw_ltsymbol,          click_ltsymbol,          NULL,                    "layout" },
+	{ -1,        0,     BAR_ALIGN_NONE,   width_ltsymbol,           draw_ltsymbol,          click_ltsymbol,          NULL,                    "layout" },
 	{ statusmon, 0,     BAR_ALIGN_RIGHT,  width_status2d,           draw_status2d,          click_statuscmd,         NULL,                    "status2d" },
 	{ -1,        0,     BAR_ALIGN_NONE,   width_awesomebar,         draw_awesomebar,        click_awesomebar,        NULL,                    "awesomebar" },
 };
@@ -201,10 +201,10 @@ static const int lockfullscreen = 1; /* 1 will force focus on the fullscreen win
 
 static const Layout layouts[] = {
 	/* symbol     arrange function */
-	{ "[]",      tile },    /* first entry is default */
-	{ "><>",      NULL },    /* no layout function means floating behavior */
-	{ "[M]",      monocle },
-	{ ":::",      gaplessgrid },
+	{ " [Tile]",       tile },    /* first entry is default */
+	{ " [Float]",      NULL },    /* no layout function means floating behavior */
+	{ " [Monacle]",      monocle },
+	{ "[Grid]",      gaplessgrid },
 	{ NULL,       NULL },
 };
 
@@ -274,6 +274,7 @@ static const Key keys[] = {
         { Mod1Mask,                     XK_f,      spawn,          SHCMD("st -e ranger") },
         { Mod1Mask,                     XK_r,      spawn,          SHCMD("killall slstatus && slstatus") },
         { Mod1Mask,                     XK_b,      spawn,          SHCMD("buckle") },
+        { Mod1Mask,                     XK_t,      spawn,          SHCMD("st -e nvim") },
         { Mod1Mask|ShiftMask,           XK_b,      spawn,          SHCMD("killall buckle") },
 
         { MODKEY,                       XK_F5,     spawn,          {.v = voldowncmd } },
@@ -387,9 +388,9 @@ static const Button buttons[] = {
 	{ ClkWinTitle,          0,                   Button1,        togglewin,      {0} },
 	{ ClkWinTitle,          0,                   Button3,        showhideclient, {0} },
 	{ ClkWinTitle,          0,                   Button2,        zoom,           {0} },
-	{ ClkStatusText,        0,                   Button1,        sigstatusbar,   {.i = 1 } },
-	{ ClkStatusText,        0,                   Button2,        sigstatusbar,   {.i = 2 } },
-	{ ClkStatusText,        0,                   Button3,        sigstatusbar,   {.i = 3 } },
+	{ ClkStatusText,        0,                   Button3,        spawn,          SHCMD("st -e nvim ~/.files/src/slstatus/config.h")},
+	{ ClkStatusText,        0,                   Button1,        sigstatusbar,   {.i = 2 } },
+	{ ClkStatusText,        0,                   Button2,        sigstatusbar,   {.i = 3 } },
 	{ ClkClientWin,         MODKEY,              Button1,        movemouse,      {0} },
 	{ ClkClientWin,         MODKEY,              Button2,        togglefloating, {0} },
 	{ ClkClientWin,         MODKEY,              Button3,        resizemouse,    {0} },
