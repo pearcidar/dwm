@@ -268,6 +268,8 @@ static const Key keys[] = {
         { Mod1Mask|ShiftMask,           XK_d,      spawn,          SHCMD("st -e nvim /home/tanbinislam/.files/src/dwm/config.h") },
         { Mod1Mask|ShiftMask,           XK_s,      spawn,          SHCMD("st -e nvim /home/tanbinislam/.files/src/slstatus/config.h") },
         { Mod1Mask,                     XK_w,      spawn,          SHCMD("sh /home/tanbinislam/.files/scripts/setwal.sh") },
+        { Mod1Mask,                     XK_p,      spawn,          SHCMD("emacsclient -c 'emacs'") },
+        { Mod1Mask|ShiftMask,           XK_p,      spawn,          SHCMD("emacs --daemon") },
         { Mod1Mask,                     XK_m,      spawn,          SHCMD("st -e musikcube") },
         { Mod1Mask|ShiftMask,           XK_w,      spawn,          SHCMD("nitrogen") },
         { Mod1Mask|ShiftMask,           XK_t,      spawn,          SHCMD("java -jar ~/.minecraft/Tlauncher.jar") },
