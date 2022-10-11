@@ -263,7 +263,6 @@ static const Key keys[] = {
         { MODKEY|ShiftMask,             XK_p,          spawn,          {.v = scrotcmd } },
         { MODKEY,                       XK_w,         spawn,          {.v = browsecmd } },
         { MODKEY,                       XK_n,         spawn,          {.v = browse2cmd } },
-	      { Mod1Mask|ControlMask,         XK_c,      spawn,          SHCMD("bash /home/pear/.scripts/configfiles.sh") },
         { Mod1Mask|ShiftMask,           XK_d,      spawn,          SHCMD("st -e nvim /home/pear/.config/dwm/config.h") },
         { Mod1Mask|ShiftMask,           XK_s,      spawn,          SHCMD("st -e nvim /home/pear/.config/slstatus/config.h") },
         { Mod1Mask,                     XK_w,      spawn,          SHCMD("sh /home/pear/.files/scripts/setwal.sh") },
