@@ -41,7 +41,7 @@ static const char *fonts[]               = { "FantasqueSansMono Nerd Font:size=1
 static const char dmenufont[]            = "FantasqueSansMono Nerd Font:size=10";
 
 
-static char black[] = "#15161e";
+static char black[] = "#11121d";
 static char gray[] = "#414868";
 static char white[] = "#c0caf6";
 static char blue[] = "#72aaf7";
@@ -201,10 +201,10 @@ static const int lockfullscreen = 1; /* 1 will force focus on the fullscreen win
 
 static const Layout layouts[] = {
 	/* symbol     arrange function */
-	{ " [Tile]",       tile },    /* first entry is default */
-	{ " [Float]",      NULL },    /* no layout function means floating behavior */
-	{ " [Monacle]",      monocle },
-	{ "[Grid]",      gaplessgrid },
+	{ "[T]",     tile },    /* first entry is default */
+	{ "[F]",     NULL },    /* no layout function means floating behavior */
+	{ "[M]",     monocle },
+	{ "[G]",      gaplessgrid },
 	{ NULL,       NULL },
 };
 
@@ -244,7 +244,7 @@ static const char *dmenucmd[] = {
 };
 static const char *termcmd[]  = { "st", NULL };
 static const char *browsecmd[] = { "firefox", NULL };
-static const char *browse2cmd[] = { "qutebrowser", NULL };
+static const char *browse2cmd[] = { "librewolf", NULL };
 static const char *soundcontrolcmd[] = { "pavucontrol", NULL };
 static const char *scrotcmd[] = { "scrot", NULL };
 static const char *mutecmd[] = { "pactl", "set-sink-mute", "0", "toggle", NULL };
@@ -262,17 +262,15 @@ static const Key keys[] = {
 	    { MODKEY|ShiftMask,             XK_s,          spawn,          {.v = soundcontrolcmd } },
         { MODKEY|ShiftMask,             XK_p,          spawn,          {.v = scrotcmd } },
         { MODKEY,                       XK_w,         spawn,          {.v = browsecmd } },
-        { MODKEY,                       XK_F2,         spawn,          {.v = browsecmd } },
-        { MODKEY,                       XK_F10,        spawn,          {.v = browse2cmd } },
-	      { Mod1Mask|ControlMask,         XK_c,      spawn,          SHCMD("bash /home/tanbinislam/.scripts/configfiles.sh") },
-        { Mod1Mask|ShiftMask,           XK_d,      spawn,          SHCMD("st -e nvim /home/tanbinislam/.files/src/dwm/config.h") },
-        { Mod1Mask|ShiftMask,           XK_s,      spawn,          SHCMD("st -e nvim /home/tanbinislam/.files/src/slstatus/config.h") },
-        { Mod1Mask,                     XK_w,      spawn,          SHCMD("sh /home/tanbinislam/.files/scripts/setwal.sh") },
+        { MODKEY,                       XK_n,         spawn,          {.v = browse2cmd } },
+	      { Mod1Mask|ControlMask,         XK_c,      spawn,          SHCMD("bash /home/pear/.scripts/configfiles.sh") },
+        { Mod1Mask|ShiftMask,           XK_d,      spawn,          SHCMD("st -e nvim /home/pear/.config/dwm/config.h") },
+        { Mod1Mask|ShiftMask,           XK_s,      spawn,          SHCMD("st -e nvim /home/pear/.config/slstatus/config.h") },
+        { Mod1Mask,                     XK_w,      spawn,          SHCMD("sh /home/pear/.files/scripts/setwal.sh") },
         { Mod1Mask,                     XK_p,      spawn,          SHCMD("emacsclient -c 'emacs'") },
         { Mod1Mask|ShiftMask,           XK_p,      spawn,          SHCMD("emacs --daemon") },
         { Mod1Mask,                     XK_m,      spawn,          SHCMD("st -e musikcube") },
         { Mod1Mask|ShiftMask,           XK_w,      spawn,          SHCMD("nitrogen") },
-        { Mod1Mask|ShiftMask,           XK_t,      spawn,          SHCMD("java -jar ~/.minecraft/Tlauncher.jar") },
         { Mod1Mask,                     XK_f,      spawn,          SHCMD("st -e ranger") },
         { Mod1Mask,                     XK_r,      spawn,          SHCMD("killall slstatus && slstatus") },
         { Mod1Mask,                     XK_b,      spawn,          SHCMD("buckle") },
@@ -403,6 +401,7 @@ static const Button buttons[] = {
 };
 
 
+// Xresources colors (will use them later, it is messy)
 static char normfgcolor[]                = "#c0caf6";
 static char normbgcolor[]                = "#15161e";
 static char normbordercolor[]            = "#15161e";
