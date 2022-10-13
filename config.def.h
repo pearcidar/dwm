@@ -23,10 +23,10 @@ static const int bar_height              = 0;   /* 0 means derive from font, >= 
 static const int vertpad                 = 10;  /* vertical padding of bar */
 static const int sidepad                 = 10;  /* horizontal padding of bar */
 #define ICONSIZE 0    /* icon size */
-#define ICONSPACING 5  /* space between icon and title */
+#define ICONSPACING 0  /* space between icon and title */
 /* Status is to be shown on: -1 (all monitors), 0 (a specific monitor by index), 'A' (active monitor) */
 static const int statusmon               = 'A';
-static const char buttonbar[]            = " ";
+static const char buttonbar[]            = " ";
 static const unsigned int systrayspacing = 1;   /* systray spacing */
 static const int showsystray             = 1;   /* 0 means no systray */
 
@@ -38,10 +38,10 @@ static int floatindicatortype            = INDICATOR_RIGHT_TAGS;
 static const char *fonts[]               = { "FantasqueSansMono Nerd Font:size=10",
                                              "PowerlineFonts:size=11"
                                              "Joypixels:size=9"};
-static const char dmenufont[]            = "FantasqueSansMono Nerd Font:size=10";
+static const char dmenufont[]            = "FantasqueSansMono Nerd Font:size=10:style=bold";
 
 
-static char black[] = "#15161e";
+static char black[] = "#11121d";
 static char gray[] = "#414868";
 static char white[] = "#c0caf6";
 static char blue[] = "#72aaf7";
@@ -97,59 +97,15 @@ static char *colors[][ColCount] = {
 
 static const char *scratchpadcmd[] = {"s", "st", "-n", "spterm", NULL};
 
-/* Tags
- * In a traditional dwm the number of tags in use can be changed simply by changing the number
- * of strings in the tags array. This build does things a bit different which has some added
- * benefits. If you need to change the number of tags here then change the NUMTAGS macro in dwm.c.
- *
- * Examples:
- *
- *  1) static char *tagicons[][NUMTAGS*2] = {
- *         [DEFAULT_TAGS] = { "1", "2", "3", "4", "5", "6", "7", "8", "9", "A", "B", "C", "D", "E", "F", "G", "H", "I" },
- *     }
- *
- *  2) static char *tagicons[][1] = {
- *         [DEFAULT_TAGS] = { "•" },
- *     }
- *
- * The first example would result in the tags on the first monitor to be 1 through 9, while the
- * tags for the second monitor would be named A through I. A third monitor would start again at
- * 1 through 9 while the tags on a fourth monitor would also be named A through I. Note the tags
- * count of NUMTAGS*2 in the array initialiser which defines how many tag text / icon exists in
- * the array. This can be changed to *3 to add separate icons for a third monitor.
- *
- * For the second example each tag would be represented as a bullet point. Both cases work the
- * same from a technical standpoint - the icon index is derived from the tag index and the monitor
- * index. If the icon index is is greater than the number of tag icons then it will wrap around
- * until it an icon matches. Similarly if there are two tag icons then it would alternate between
- * them. This works seamlessly with alternative tags and alttagsdecoration patches.
- */
+/* Tags */
 static char *tagicons[][NUMTAGS] =
 {
-	[DEFAULT_TAGS]        = { "1", "2", "3", "4", "5", "6", "7", "8", "9" },
+	[DEFAULT_TAGS]        = { "一", "二", "三", "四", "五", "六", "七", "八", "九" },
+//	[DEFAULT_TAGS]        = { "1", "2", "3", "4", "5", "6", "7", "8", "9" },
 	[ALTERNATIVE_TAGS]    = { "A", "B", "C", "D", "E", "F", "G", "H", "I" },
   [ALT_TAGS_DECORATION] = { "<1>", "<2>", "<3>", "<4>", "<5>", "<6>", "<7>", "<8>", "<9>" },
 };
 
-
-/* There are two options when it comes to per-client rules:
- *  - a typical struct table or
- *  - using the RULE macro
- *
- * A traditional struct table looks like this:
- *    // class      instance  title  wintype  tags mask  isfloating  monitor
- *    { "Gimp",     NULL,     NULL,  NULL,    1 << 4,    0,          -1 },
- *    { "Firefox",  NULL,     NULL,  NULL,    1 << 7,    0,          -1 },
- *
- * The RULE macro has the default values set for each field allowing you to only
- * specify the values that are relevant for your rule, e.g.
- *
- *    RULE(.class = "Gimp", .tags = 1 << 4)
- *    RULE(.class = "Firefox", .tags = 1 << 7)
- *
- * Refer to the Rule struct definition for the list of available fields depending on
- * the patches you enable.
- */
 static const Rule rules[] = {
 	/* xprop(1):
 	 *	WM_CLASS(STRING) = instance, class
@@ -163,24 +119,12 @@ static const Rule rules[] = {
 	RULE(.wintype = WTYPE "SPLASH", .isfloating = 1)
 	RULE(.class = "Gimp", .tags = 1 << 4)
 	RULE(.class = "Firefox", .tags = 1 << 7)
+	RULE(.class = "eww", .tags = 1 << 7, .isfloating = 1)
 	RULE(.class = "st", .tags = 1 << 7)
 	RULE(.instance = "spterm", .scratchkey = 's', .isfloating = 1)
 };
 
 
-
-/* Bar rules allow you to configure what is shown where on the bar, as well as
- * introducing your own bar modules.
- *
- *    monitor:
- *      -1  show on all monitors
- *       0  show on monitor 0
- *      'A' show on active monitor (i.e. focused / selected) (or just -1 for active?)
- *    bar - bar index, 0 is default, 1 is extrabar
- *    alignment - how the module is aligned compared to other modules
- *    widthfunc, drawfunc, clickfunc - providing bar module width, draw and click functions
- *    name - does nothing, intended for visual clue and for logging / debugging
- */
 static const BarRule barrules[] = {
 	/* monitor   bar    alignment         widthfunc                 drawfunc                clickfunc                hoverfunc                name */
 	{ -1,        0,     BAR_ALIGN_LEFT,   width_stbutton,           draw_stbutton,          click_stbutton,          NULL,                    "statusbutton" },
@@ -201,10 +145,10 @@ static const int lockfullscreen = 1; /* 1 will force focus on the fullscreen win
 
 static const Layout layouts[] = {
 	/* symbol     arrange function */
-	{ " [Tile]",       tile },    /* first entry is default */
-	{ " [Float]",      NULL },    /* no layout function means floating behavior */
-	{ " [Monacle]",      monocle },
-	{ "[Grid]",      gaplessgrid },
+	{ "[T]",     tile },    /* first entry is default */
+	{ "[F]",     NULL },    /* no layout function means floating behavior */
+	{ "[M]",     monocle },
+	{ "[G]",      gaplessgrid },
 	{ NULL,       NULL },
 };
 
@@ -244,7 +188,7 @@ static const char *dmenucmd[] = {
 };
 static const char *termcmd[]  = { "st", NULL };
 static const char *browsecmd[] = { "firefox", NULL };
-static const char *browse2cmd[] = { "qutebrowser", NULL };
+static const char *browse2cmd[] = { "librewolf", NULL };
 static const char *soundcontrolcmd[] = { "pavucontrol", NULL };
 static const char *scrotcmd[] = { "scrot", NULL };
 static const char *mutecmd[] = { "pactl", "set-sink-mute", "0", "toggle", NULL };
@@ -262,9 +206,7 @@ static const Key keys[] = {
 	    { MODKEY|ShiftMask,             XK_s,          spawn,          {.v = soundcontrolcmd } },
         { MODKEY|ShiftMask,             XK_p,          spawn,          {.v = scrotcmd } },
         { MODKEY,                       XK_w,         spawn,          {.v = browsecmd } },
-        { MODKEY,                       XK_F2,         spawn,          {.v = browsecmd } },
-        { MODKEY,                       XK_F10,        spawn,          {.v = browse2cmd } },
-	      { Mod1Mask|ControlMask,         XK_c,      spawn,          SHCMD("bash /home/pear/.scripts/configfiles.sh") },
+        { MODKEY,                       XK_n,         spawn,          {.v = browse2cmd } },
         { Mod1Mask|ShiftMask,           XK_d,      spawn,          SHCMD("st -e nvim /home/pear/.config/dwm/config.h") },
         { Mod1Mask|ShiftMask,           XK_s,      spawn,          SHCMD("st -e nvim /home/pear/.config/slstatus/config.h") },
         { Mod1Mask,                     XK_w,      spawn,          SHCMD("sh /home/pear/.files/scripts/setwal.sh") },
@@ -272,7 +214,6 @@ static const Key keys[] = {
         { Mod1Mask|ShiftMask,           XK_p,      spawn,          SHCMD("emacs --daemon") },
         { Mod1Mask,                     XK_m,      spawn,          SHCMD("st -e musikcube") },
         { Mod1Mask|ShiftMask,           XK_w,      spawn,          SHCMD("nitrogen") },
-        { Mod1Mask|ShiftMask,           XK_t,      spawn,          SHCMD("java -jar ~/.minecraft/Tlauncher.jar") },
         { Mod1Mask,                     XK_f,      spawn,          SHCMD("st -e ranger") },
         { Mod1Mask,                     XK_r,      spawn,          SHCMD("killall slstatus && slstatus") },
         { Mod1Mask,                     XK_b,      spawn,          SHCMD("buckle") },
@@ -403,6 +344,7 @@ static const Button buttons[] = {
 };
 
 
+// Xresources colors (will use them later, it is messy)
 static char normfgcolor[]                = "#c0caf6";
 static char normbgcolor[]                = "#15161e";
 static char normbordercolor[]            = "#15161e";
