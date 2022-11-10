@@ -9,7 +9,6 @@ draw_awesomebar(Bar *bar, BarArg *a)
 {
 	int n = 0, scm, remainder = 0, tabw, tpad, tx, tw;
 	unsigned int i;
-	int ipad;
 	int x = a->x + lrpad / 2, w = a->w - lrpad / 2;
 
 	Client *c;
@@ -33,7 +32,6 @@ draw_awesomebar(Bar *bar, BarArg *a)
 				scm = SchemeTitleNorm;
 
 			tpad = lrpad / 2;
-			ipad = c->icon ? c->icw + ICONSPACING : 0;
 
 			tx = x;
 			tw = tabw;
@@ -48,11 +46,6 @@ draw_awesomebar(Bar *bar, BarArg *a)
 			tx += tpad;
 			tw -= lrpad;
 
-			if (ipad) {
-				drw_pic(drw, tx, a->y + (a->h - c->ich) / 2, c->icw, c->ich, c->icon);
-				tx += ipad;
-				tw -= ipad;
-			}
 
 			drw_text(drw, tx, a->y, tw, a->h, 0, c->name, 0, False);
 

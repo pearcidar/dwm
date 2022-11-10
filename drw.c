@@ -8,6 +8,27 @@
 #include "drw.h"
 #include "util.h"
 
+#include <fribidi.h>
+
+static char fribidi_text[BUFSIZ] = "";
+
+static void
+apply_fribidi(const char *str)
+{
+	FriBidiStrIndex len = strlen(str);
+	FriBidiChar logical[BUFSIZ];
+	FriBidiChar visual[BUFSIZ];
+	FriBidiParType base = FRIBIDI_PAR_ON;
+	FriBidiCharSet charset;
+
+	fribidi_text[0] = 0;
+	if (len > 0) {
+		charset = fribidi_parse_charset("UTF-8");
+		len = fribidi_charset_to_unicode(charset, str, len, logical);
+		fribidi_log2vis(logical, len, &base, visual, NULL, NULL, NULL);
+		len = fribidi_unicode_to_charset(charset, visual, len, fribidi_text);
+	}
+}
 
 #define UTF_INVALID 0xFFFD
 #define UTF_SIZ     4
@@ -18,7 +39,6 @@ static const long utfmin[UTF_SIZ + 1] = {       0,    0,  0x80,  0x800,  0x10000
 static const long utfmax[UTF_SIZ + 1] = {0x10FFFF, 0x7F, 0x7FF, 0xFFFF, 0x10FFFF};
 
 Clr transcheme[3];
-
 
 static long
 utf8decodebyte(const char c, size_t *i)
@@ -79,7 +99,6 @@ drw_create(Display *dpy, int screen, Window root, unsigned int w, unsigned int h
 	drw->depth = depth;
 	drw->cmap = cmap;
 	drw->drawable = XCreatePixmap(dpy, root, w, h, depth);
-	drw->picture = XRenderCreatePicture(dpy, drw->drawable, XRenderFindVisualFormat(dpy, visual), 0, NULL);
 	drw->gc = XCreateGC(dpy, drw->drawable, 0, NULL);
 	XSetLineAttributes(dpy, drw->gc, 1, LineSolid, CapButt, JoinMiter);
 
@@ -94,18 +113,14 @@ drw_resize(Drw *drw, unsigned int w, unsigned int h)
 
 	drw->w = w;
 	drw->h = h;
-	if (drw->picture)
-		XRenderFreePicture(drw->dpy, drw->picture);
 	if (drw->drawable)
 		XFreePixmap(drw->dpy, drw->drawable);
 	drw->drawable = XCreatePixmap(drw->dpy, drw->root, w, h, drw->depth);
-	drw->picture = XRenderCreatePicture(drw->dpy, drw->drawable, XRenderFindVisualFormat(drw->dpy, drw->visual), 0, NULL);
 }
 
 void
 drw_free(Drw *drw)
 {
-	XRenderFreePicture(drw->dpy, drw->picture);
 	XFreePixmap(drw->dpy, drw->drawable);
 	XFreeGC(drw->dpy, drw->gc);
 	drw_fontset_free(drw->fonts);
@@ -249,12 +264,11 @@ drw_setscheme(Drw *drw, Clr *scm)
 void
 drw_settrans(Drw *drw, Clr *psc, Clr *nsc)
 {
-        if (drw) {
-            transcheme[0] = psc[ColBg]; transcheme[1] = nsc[ColBg]; transcheme[2] = psc[ColBorder];
-            drw->scheme = transcheme;
-        }
+	if (drw) {
+		transcheme[0] = psc[ColBg]; transcheme[1] = nsc[ColBg]; transcheme[2] = psc[ColBorder];
+		drw->scheme = transcheme;
+	}
 }
-
 
 void
 drw_rect(Drw *drw, int x, int y, unsigned int w, unsigned int h, int filled, int invert)
@@ -269,7 +283,7 @@ drw_rect(Drw *drw, int x, int y, unsigned int w, unsigned int h, int filled, int
 }
 
 int
-drw_text(Drw *drw, int x, int y, unsigned int w, unsigned int h, unsigned int lpad, const char *text, int invert, Bool markup)
+_drw_text(Drw *drw, int x, int y, unsigned int w, unsigned int h, unsigned int lpad, const char *text, int invert, Bool markup)
 {
 	char buf[1024];
 	int ty;
@@ -369,7 +383,6 @@ drw_text(Drw *drw, int x, int y, unsigned int w, unsigned int h, unsigned int lp
 			fcpattern = FcPatternDuplicate(drw->fonts->pattern);
 			FcPatternAddCharSet(fcpattern, FC_CHARSET, fccharset);
 			FcPatternAddBool(fcpattern, FC_SCALABLE, FcTrue);
-			FcPatternAddBool(fcpattern, FC_COLOR, FcFalse);
 
 			FcConfigSubstitute(NULL, fcpattern, FcMatchPattern);
 			FcDefaultSubstitute(fcpattern);
@@ -397,38 +410,43 @@ drw_text(Drw *drw, int x, int y, unsigned int w, unsigned int h, unsigned int lp
 	return x + (render ? w : 0);
 }
 
+int
+drw_text(Drw *drw, int x, int y, unsigned int w, unsigned int h, unsigned int lpad, const char *text, int invert, Bool markup)
+{
+	apply_fribidi(text);
+	return _drw_text(drw, x, y, w, h, lpad, fribidi_text, invert, markup);
+}
+
 void
 drw_arrow(Drw *drw, int x, int y, unsigned int w, unsigned int h, int direction, int slash)
 {
-        if (!drw || !drw->scheme)
-                return;
+	if (!drw || !drw->scheme)
+		return;
 
-        /* direction=1 draws right arrow */
-        x = direction ? x : x + w;
-        w = direction ? w : -w;
-        /* slash=1 draws slash instead of arrow */
-        unsigned int hh = slash ? (direction ? 0 : h) : h/2;
+	/* direction=1 draws right arrow */
+	x = direction ? x : x + w;
+	w = direction ? w : -w;
+	/* slash=1 draws slash instead of arrow */
+	unsigned int hh = slash ? (direction ? 0 : h) : h/2;
 
-        XPoint points[] = {
-                {x    , y      },
-                {x + w, y + hh },
-                {x    , y + h  },
-        };
+	XPoint points[] = {
+		{x    , y      },
+		{x + w, y + hh },
+		{x    , y + h  },
+	};
 
-        XPoint bg[] = {
-            {x    , y    },
-            {x + w, y    },
-            {x + w, y + h},
-            {x    , y + h},
-        };
+	XPoint bg[] = {
+		{x    , y    },
+		{x + w, y    },
+		{x + w, y + h},
+		{x    , y + h},
+	};
 
-        XSetForeground(drw->dpy, drw->gc, drw->scheme[ColBg].pixel);
-        XFillPolygon(drw->dpy, drw->drawable, drw->gc, bg, 4, Convex, CoordModeOrigin);
-        XSetForeground(drw->dpy, drw->gc, drw->scheme[ColFg].pixel);
-        XFillPolygon(drw->dpy, drw->drawable, drw->gc, points, 3, Nonconvex, CoordModeOrigin);
+	XSetForeground(drw->dpy, drw->gc, drw->scheme[ColBg].pixel);
+	XFillPolygon(drw->dpy, drw->drawable, drw->gc, bg, 4, Convex, CoordModeOrigin);
+	XSetForeground(drw->dpy, drw->gc, drw->scheme[ColFg].pixel);
+	XFillPolygon(drw->dpy, drw->drawable, drw->gc, points, 3, Nonconvex, CoordModeOrigin);
 }
-
-
 
 void
 drw_map(Drw *drw, Window win, int x, int y, unsigned int w, unsigned int h)

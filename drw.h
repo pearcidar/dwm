@@ -25,7 +25,6 @@ typedef struct {
 	unsigned int depth;
 	Colormap cmap;
 	Drawable drawable;
-	Picture picture;
 	GC gc;
 	Clr *scheme;
 	Fnt *fonts;
@@ -68,7 +67,7 @@ void drw_settrans(Drw *drw, Clr *psc, Clr *nsc);
 /* Drawing functions */
 void drw_rect(Drw *drw, int x, int y, unsigned int w, unsigned int h, int filled, int invert);
 int drw_text(Drw *drw, int x, int y, unsigned int w, unsigned int h, unsigned int lpad, const char *text, int invert, Bool markup);
-void drw_arrow(Drw* drw, int x, int y, unsigned int w, unsigned int h, int direction, int slash);
+void drw_arrow(Drw *drw, int x, int y, unsigned int w, unsigned int h, int direction, int slash);
 
 /* Map functions */
 void drw_map(Drw *drw, Window win, int x, int y, unsigned int w, unsigned int h);

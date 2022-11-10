@@ -80,7 +80,7 @@ drawstatusbar(BarArg *a, char* stext)
 					}
 					memcpy(buf, (char*)text+i+1, 7);
 					buf[7] = '\0';
-					drw_clr_create(drw, &drw->scheme[ColFg], buf, alphas[SchemeNorm][ColFg]);
+					drw_clr_create(drw, &drw->scheme[ColFg], buf, 0xff);
 					i += 7;
 				} else if (text[i] == 'b') {
 					char buf[8];
@@ -91,14 +91,14 @@ drawstatusbar(BarArg *a, char* stext)
 					}
 					memcpy(buf, (char*)text+i+1, 7);
 					buf[7] = '\0';
-					drw_clr_create(drw, &drw->scheme[ColBg], buf, alphas[SchemeNorm][ColBg]);
+					drw_clr_create(drw, &drw->scheme[ColBg], buf, 0xff);
 					i += 7;
 				} else if (text[i] == 'C') {
 					int c = atoi(text + ++i) % 16;
-					drw_clr_create(drw, &drw->scheme[ColFg], termcolor[c], alphas[SchemeNorm][ColBg]);
+					drw_clr_create(drw, &drw->scheme[ColFg], termcolor[c], 0xff);
 				} else if (text[i] == 'B') {
 					int c = atoi(text + ++i) % 16;
-					drw_clr_create(drw, &drw->scheme[ColBg], termcolor[c], alphas[SchemeNorm][ColBg]);
+					drw_clr_create(drw, &drw->scheme[ColBg], termcolor[c], 0xff);
 				} else if (text[i] == 'd') {
 					drw->scheme[ColFg] = scheme[SchemeNorm][ColFg];
 					drw->scheme[ColBg] = scheme[SchemeNorm][ColBg];
