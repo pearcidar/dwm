@@ -14,11 +14,12 @@ Patches Added
 * colorbar
 * canfocus
 * rotatestack
+* IPC
+* resizemove with mouse
 * restartsig
 * swallow
-* hide vacant tags
+* hide vacant tags + powerline tags
 * rotatetags
-* noborder
 * autostart
 * dynamicscratchpads
 * barpadding
@@ -51,7 +52,7 @@ then run:
 	sudo make clean install
 
 dwm will search for an autostart script in .local/share/dwm/autostart.sh, make that for autostart functionality
-
+ 
 Running dwm
 -----------
 
@@ -71,7 +72,7 @@ the DISPLAY environment variable is set correctly, e.g.:
 (This will start dwm on display :1 of the host foo.bar.)
 
 slstatus will have all the needed statusbar scripts with it, use my build or other builds for that 
-
+ 
 Configuration
 -------------
 The configuration of dwm is done by creating a custom config.h (or config.def.h for default settings)
