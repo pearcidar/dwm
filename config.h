@@ -1,12 +1,12 @@
 /* See LICENSE file for copyright and license details. */
 
 /* appearance */
-static const unsigned int borderpx       = 2;   /* border pixel of windows */
+static const unsigned int borderpx       = 3;   /* border pixel of windows */
 static const unsigned int snap           = 32;  /* snap pixel */
-static const int swallowfloating         = 0;   /* 1 means swallow floating windows by default */
+static const int swallowfloating         = 1;   /* 1 means swallow floating windows by default */
 static const int scalepreview            = 4;        /* Tag preview scaling */
-static const unsigned int gappih         = 5;  /* horiz inner gap between windows */
-static const unsigned int gappiv         = 5;  /* vert inner gap between windows */
+static const unsigned int gappih         = 7;  /* horiz inner gap between windows */
+static const unsigned int gappiv         = 7;  /* vert inner gap between windows */
 static const unsigned int gappoh         = 5;  /* horiz outer gap between windows and screen edge */
 static const unsigned int gappov         = 5;  /* vert outer gap between windows and screen edge */
 static const int smartgaps_fact          = 1;   /* gap factor when there is only one client; 0 = no gaps, 3 = 3x outer gaps */
@@ -52,7 +52,7 @@ static char green[] = 	 "#018993";
 static char purple[] =	 "#eabbb9";
 static char cyan[] = 	 "#7dcfff";
 
-static const unsigned int baralpha = 0xf2;
+static const unsigned int baralpha = 0xff;
 static const unsigned int borderalpha = OPAQUE;
 static const unsigned int alphas[][3] = {
 	/*                       fg      bg        border     */
@@ -72,16 +72,16 @@ static const unsigned int alphas[][3] = {
 static char *colors[][ColCount] = {
 	/*                       fg                bg                border                float */
 	[SchemeNorm]         = { yellow,           black,           black,               purple },
-	[SchemeSel]          = { black,            yellow,          yellow,               blue },
+	[SchemeSel]          = { red,            gray,          yellow,               blue },
 	[SchemeTitleNorm]    = { green,            black,           black,               black },
-	[SchemeTitleSel]     = { blue,            black2,           black,               black },
+	[SchemeTitleSel]     = { blue,             black2,           black,               black },
 	[SchemeTagsNorm]     = { white,            black,           black,               black },
-	[SchemeTagsSel]      = { red,            gray,             red,                  red },
+	[SchemeTagsSel]      = { red,              gray,             red,                  red },
 	[SchemeHidNorm]      = { green,            black,           black,               black },
 	[SchemeHidSel]       = { cyan,             black,           black,               black },
-	[SchemeUrg]          = { black,           red,              red,                  red },
-	[SchemeScratchSel]  =  { black,           blue,             black,               blue },
-	[SchemeScratchNorm] =  { black,           red,              black,               green },
+	[SchemeUrg]          = { black,            red,              red,                  red },
+	[SchemeScratchSel]  =  { black,            blue,             black,               blue },
+	[SchemeScratchNorm] =  { black,            red,              black,               green },
 };
 
 static const char *layoutmenu_cmd = "layoutmenu.sh";
@@ -101,12 +101,14 @@ static const Rule rules[] = {
 	RULE(.wintype = WTYPE "UTILITY", .isfloating = 1)
 	RULE(.wintype = WTYPE "TOOLBAR", .isfloating = 1)
 	RULE(.wintype = WTYPE "SPLASH", .isfloating = 1)
-	RULE(.class = "Gimp", .tags = 1 << 4, .isterminal = 1)
-	RULE(.class = "Firefox", .tags = 1 << 7, .isterminal = 1)
-	RULE(.class = "eww", .tags = 1 << 7, .isfloating = 1, .isterminal = 1)
+	RULE(.class = "Gimp", .tags = 1 << 4, .isterminal = 0)
+	RULE(.class = "Firefox", .tags = 1 << 7, .isterminal = 0)
+	RULE(.class = "eww", .tags = 1 << 7, .isfloating = 1, .isterminal = 0)
 	RULE(.class = "st", .tags = 1 << 7, .isterminal = 1)
-	RULE(.class = "transmission-gtk", .tags = 1 << 7, .isfloating = 1)
-	RULE(.class = "fontmatrix", .tags = 1 << 7, .isfloating = 1 )
+	RULE(.class = "nvim-qt", .isfloating = 1)
+	RULE(.class = "galculator", .tags = 1 << 7, .isterminal = 1, .noswallow = 1)
+	RULE(.class = "transmission-gtk", .tags = 1 << 7, .isfloating = 1, .noswallow = 0)
+	RULE(.class = "fontmatrix", .tags = 1 << 7, .isfloating = 0)
 	RULE(.instance = "spterm", .scratchkey = 's', .isfloating = 1, .isterminal = 1)
 };
 
@@ -195,12 +197,13 @@ static const Key keys[] = {
         { Mod1Mask,                     XK_w,      spawn,          SHCMD("sh /home/pear/.files/scripts/setwal.sh") },
         { Mod1Mask,                     XK_p,      spawn,          SHCMD("emacsclient -c 'emacs'") },
         { Mod1Mask|ShiftMask,           XK_p,      spawn,          SHCMD("emacs --daemon") },
-        { Mod1Mask,                     XK_m,      spawn,          SHCMD("st -e ncmpcpp") },
+        { Mod1Mask,                     XK_m,      spawn,          SHCMD("st -e cmus") },
         { Mod1Mask|ShiftMask,           XK_w,      spawn,          SHCMD("nitrogen") },
         { Mod1Mask,                     XK_f,      spawn,          SHCMD("st -e lfub") },
         { Mod1Mask,                     XK_r,      spawn,          SHCMD("killall slstatus && slstatus") },
         { Mod1Mask,                     XK_b,      spawn,          SHCMD("buckle") },
         { Mod1Mask,                     XK_t,      spawn,          SHCMD("st -e nvim") },
+        { Mod1Mask,                     XK_n,      spawn,          SHCMD("sh -c ~/.vim-anywhere/bin/run") },
         { Mod1Mask|ShiftMask,           XK_b,      spawn,          SHCMD("killall buckle") },
 
 	{ MODKEY,                       XK_F5,     spawn,          {.v = voldowncmd } },
@@ -397,7 +400,6 @@ static IPCCommand ipccommands[] = {
 	IPCCOMMAND( xrdb, 1, {ARG_TYPE_NONE} ),
 };
 
-static char c000000[]                    = "#000000"; // placeholder value
 static char normfgcolor[]                = "#bbbbbb";
 static char normbgcolor[]                = "#222222";
 static char normbordercolor[]            = "#444444";
