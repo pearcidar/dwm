@@ -1,7 +1,7 @@
 /* See LICENSE file for copyright and license details. */
 
 /* appearance */
-static const unsigned int borderpx       = 2;   /* border pixel of windows */
+static const unsigned int borderpx       = 3;   /* border pixel of windows */
 static const unsigned int snap           = 32;  /* snap pixel */
 static const int swallowfloating         = 0;   /* 1 means swallow floating windows by default */
 static const int scalepreview            = 4;        /* Tag preview scaling */
@@ -34,25 +34,60 @@ static const unsigned int maxwtab          = 600;  /* tab menu width */
 static const unsigned int maxhtab          = 23;  /* tab menu height */
 
 /* Indicators: see patch/bar_indicators.h for options */
-static int tagindicatortype              = INDICATOR_NONE;
+static int tagindicatortype              = INDICATOR_CLIENT_DOTS;
 static int tiledindicatortype            = INDICATOR_NONE;
 static int floatindicatortype            = INDICATOR_TOP_LEFT_SQUARE;
 static const int quit_empty_window_count = 0;   /* only allow dwm to quit if no (<= count) windows are open */
-static const char *fonts[]               = { "FantasqueSansMono Nerd Font:size=10:style=medium" };
-static const char dmenufont[]            = "FantasqueSansMono Nerd Font:size=10";
+static const char *fonts[]               = { "FantasqueSansM Nerd Font:size=10:style=medium" };
+static const char dmenufont[]            = "FantasqueSansM Nerd Font:size=10";
 
+/*
 static char black[] =	 "#191724";
-static char black2[] = 	 "#1e1e2e";
-static char gray[] =     "#403c58";
-static char white[] =    "#faebd7";
-static char blue[] = 	 "#9bced7";
-static char red[] = 	 "#ea6f91";
-static char yellow[] = 	 "#f1ca93";
-static char green[] = 	 "#018993";
-static char purple[] =	 "#eabbb9";
+static char black2[] = 	 "#1f2335";
+static char gray[] =     "#44415a";
+static char white[] =    "#c0caf7";
+static char blue[] = 	 "#7aa2f7";
+static char red[] = 	 "#f7768e";
+static char yellow[] = 	 "#e0af78";
+static char green[] = 	 "#9ece6a";
+static char purple[] =	 "#bb9af7";
 static char cyan[] = 	 "#7dcfff";
+*/
 
-static const unsigned int baralpha = 0xf2;
+
+/*
+static char black[] =	 "#0C012c";
+static char black2[] = 	 "#0c012c";
+static char gray[] =     "#755282";
+static char gray2[] =     "#a07b80";
+static char gray3[] =     "#a07b80";
+static char gray4[] =     "#0c012c";
+static char white[] =    "#e5b0b8";
+static char blue[] = 	 "#dd6777";
+static char red[] = 	 "#923864";
+static char yellow[] = 	 "#AE5477";
+static char green[] = 	 "#8e4d77";
+static char purple[] =	 "#755282";
+static char cyan2[] = 	 "#955f8e";
+static char cyan[] = 	 "#955f83";
+*/
+static char black[] =	 "#090618";
+static char black2[] = 	 "#1f1f28";
+static char gray[] =     "#403c58";
+static char gray2[] =     "#56526e";
+static char gray3[] =     "#524f67";
+static char gray4[] =     "#2a283e";
+static char white[] =    "#dcd7ba";
+static char blue[] = 	 "#7e9cd8";
+static char red[] = 	 "#c34043";
+static char yellow[] = 	 "#e0af78";
+static char green[] = 	 "#98bb6c";
+static char purple[] =	 "#957fb8";
+static char cyan2[] = 	 "#7dcfff";
+static char cyan[] = 	 "#7aa89f";
+
+
+static const unsigned int baralpha = 0xff;
 static const unsigned int borderalpha = OPAQUE;
 static const unsigned int alphas[][3] = {
 	/*                       fg      bg        border     */
@@ -73,12 +108,12 @@ static char *colors[][ColCount] = {
 	/*                       fg                bg                border                float */
 	[SchemeNorm]         = { yellow,           black,           black,               purple },
 	[SchemeSel]          = { black,            yellow,          yellow,               blue },
-	[SchemeTitleNorm]    = { green,            black,           black,               black },
-	[SchemeTitleSel]     = { blue,            black2,           black,               black },
+	[SchemeTitleNorm]    = { cyan,            gray2,           black,               black },
+	[SchemeTitleSel]     = { cyan,            gray,           black,               black },
 	[SchemeTagsNorm]     = { white,            black,           black,               black },
-	[SchemeTagsSel]      = { red,            gray,             red,                  red },
-	[SchemeHidNorm]      = { green,            black,           black,               black },
-	[SchemeHidSel]       = { cyan,             black,           black,               black },
+	[SchemeTagsSel]      = { yellow,            black2,             red,                  red },
+	[SchemeHidNorm]      = { red,            gray4,           black,               black },
+	[SchemeHidSel]       = { cyan2,             gray3,           black,               black },
 	[SchemeUrg]          = { black,           red,              red,                  red },
 	[SchemeScratchSel]  =  { black,           blue,             black,               blue },
 	[SchemeScratchNorm] =  { black,           red,              black,               green },
@@ -87,12 +122,13 @@ static char *colors[][ColCount] = {
 static const char *layoutmenu_cmd = "layoutmenu.sh";
 
 
-static const char *scratchpadcmd[] = {"s", "st", "-n", "spterm", NULL};
+static const char *scratchpadcmd[] = {"s", "kitty", "--name", "spterm", NULL};
 
 static char *tagicons[][NUMTAGS] =
 {
+//  	[DEFAULT_TAGS]        = {"󰨓", "󰨓", "󰨓", "󰨓", "󰨓", "󰨓", "󰨓", "󰨓", "󰨓"},
 	[DEFAULT_TAGS]        = { "一", "二", "三", "四", "五", "六", "七", "八", "九" },
-	[ALTERNATIVE_TAGS]    = { "A", "B", "C", "D", "E", "F", "G", "H", "I" },
+//	[ALTERNATIVE_TAGS]    = { "A", "B", "C", "D", "E", "F", "G", "H", "I" },
 	[ALT_TAGS_DECORATION] = { "<1>", "<2>", "<3>", "<4>", "<5>", "<6>", "<7>", "<8>", "<9>" },
 };
 
@@ -101,22 +137,23 @@ static const Rule rules[] = {
 	RULE(.wintype = WTYPE "UTILITY", .isfloating = 1)
 	RULE(.wintype = WTYPE "TOOLBAR", .isfloating = 1)
 	RULE(.wintype = WTYPE "SPLASH", .isfloating = 1)
-	RULE(.class = "Gimp", .tags = 1 << 4, .isterminal = 1)
+	RULE(.class = "Gimp", .tags = 1 << 4, .isterminal = 1, .isfloating = 1)
 	RULE(.class = "Firefox", .tags = 1 << 7, .isterminal = 1)
 	RULE(.class = "eww", .tags = 1 << 7, .isfloating = 1, .isterminal = 1)
-	RULE(.class = "st", .tags = 1 << 7, .isterminal = 1)
-	RULE(.class = "transmission-gtk", .tags = 1 << 7, .isfloating = 1)
+	RULE(.class = "St", .isterminal = 1)
+	RULE(.class = "kitty", .isterminal = 1)
+	RULE(.class = "transmission-gtk", .tags = 1 << 7, .isterminal = 1)
 	RULE(.class = "fontmatrix", .tags = 1 << 7, .isfloating = 1 )
 	RULE(.instance = "spterm", .scratchkey = 's', .isfloating = 1, .isterminal = 1)
 };
 
 static const BarRule barrules[] = {
 	/* monitor   bar    alignment         widthfunc                 drawfunc                clickfunc                hoverfunc                name */
-	{ -1,        0,     BAR_ALIGN_LEFT,   width_stbutton,           draw_stbutton,          click_stbutton,          NULL,                    "statusbutton" },
+//	{ -1,        0,     BAR_ALIGN_LEFT,   width_stbutton,           draw_stbutton,          click_stbutton,          NULL,                    "statusbutton" },
 //	{  0,        0,     BAR_ALIGN_LEFT,   width_pwrl_tags,          draw_pwrl_tags,         click_pwrl_tags,         NULL,                    "powerline_tags" },
 	{ -1,        0,     BAR_ALIGN_LEFT,   width_tags,               draw_tags,              click_tags,              hover_tags,              "tags" },
 	{  0,        0,     BAR_ALIGN_RIGHT,  width_systray,            draw_systray,           click_systray,           NULL,                    "systray" },
-	{ -1,        0,     BAR_ALIGN_LEFT,   width_ltsymbol,           draw_ltsymbol,          click_ltsymbol,          NULL,                    "layout" },
+	{ -1,        0,     BAR_ALIGN_RIGHT,   width_ltsymbol,           draw_ltsymbol,          click_ltsymbol,          NULL,                    "layout" },
 	{ statusmon, 0,     BAR_ALIGN_RIGHT,  width_status2d,           draw_status2d,          click_statuscmd,         NULL,                    "status2d" },
 	{ -1,        0,     BAR_ALIGN_NONE,   width_awesomebar,         draw_awesomebar,        click_awesomebar,        NULL,                    "awesomebar" },
 };
@@ -153,26 +190,28 @@ static const Layout layouts[] = {
 /* commands */
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
 
+
+//dmenu_run -l 15 -fn "FantasqueSansM Nerd Font:pixelsize=14:style=bold italic" -X 1013 -W 350 -Y 451 -sb "#e6c384" -p "󰛔 "
+
+
 static const char *dmenucmd[] = {
 	"dmenu_run",
 	"-m", dmenumon,
 	"-h",  "15",
-	"-bw", "4",
-	"-p",  " ",
-	"-l",  "20",
-	"-c",
-	"-Y",  "-3",
-	"-X",  "0",
-	"-fn", "FantasqueSansMono Nerd Font:pixelsize=15",
-	"-b",
-	"-sb", gray,
-	"-Y",  "-3",
+	"-bw", "3",
+        "-W",  "350",
+	"-p",  "󰛔 ",
+	"-l",  "15",
+	"-Y",  "451",
+	"-X",  "1013",
+	"-fn", "FantasqueSansM Nerd Font:pixelsize=14:style=bold italic",
+	"-sb", "#e6c384",
 	"-nf", white,
 	"-sf", black,
 	NULL
 };
-static const char *termcmd[]  = { "st", NULL };
-static const char *browsecmd[] = { "librewolf", NULL };
+static const char *termcmd[]  = { "kitty", NULL };
+static const char *browsecmd[] = { "firefox", NULL };
 static const char *soundcontrolcmd[] = { "pavucontrol", NULL };
 static const char *scrotcmd[] = { "scrot", NULL };
 static const char *mutecmd[] = { "pactl", "set-sink-mute", "0", "toggle", NULL };
@@ -190,22 +229,14 @@ static const Key keys[] = {
 	{ MODKEY|ShiftMask,             XK_s,          spawn,          {.v = soundcontrolcmd } },
         { MODKEY|ShiftMask,             XK_p,          spawn,          {.v = scrotcmd } },
         { MODKEY,                       XK_w,         spawn,          {.v = browsecmd } },
-        { Mod1Mask|ShiftMask,           XK_d,      spawn,          SHCMD("st -e nvim /home/pear/.config/dwm/config.h") },
-        { Mod1Mask|ShiftMask,           XK_s,      spawn,          SHCMD("st -e nvim /home/pear/.config/slstatus/config.h") },
-        { Mod1Mask,                     XK_w,      spawn,          SHCMD("sh /home/pear/.files/scripts/setwal.sh") },
-        { Mod1Mask,                     XK_p,      spawn,          SHCMD("emacsclient -c 'emacs'") },
-        { Mod1Mask|ShiftMask,           XK_p,      spawn,          SHCMD("emacs --daemon") },
-        { Mod1Mask,                     XK_m,      spawn,          SHCMD("st -e ncmpcpp") },
+        { Mod1Mask,                     XK_F1,      spawn,          SHCMD("kitty cmus") },
         { Mod1Mask|ShiftMask,           XK_w,      spawn,          SHCMD("nitrogen") },
-        { Mod1Mask,                     XK_f,      spawn,          SHCMD("st -e lfub") },
         { Mod1Mask,                     XK_r,      spawn,          SHCMD("killall slstatus && slstatus") },
-        { Mod1Mask,                     XK_b,      spawn,          SHCMD("buckle") },
-        { Mod1Mask,                     XK_t,      spawn,          SHCMD("st -e nvim") },
-        { Mod1Mask|ShiftMask,           XK_b,      spawn,          SHCMD("killall buckle") },
+        { Mod1Mask,                     XK_l,      spawn,          SHCMD("emacsclient -c -a 'emacs'") },
 
-	{ MODKEY,                       XK_F5,     spawn,          {.v = voldowncmd } },
-	{ MODKEY,                       XK_F6,     spawn,          {.v = volupcmd } },
-	{ MODKEY|ShiftMask,             XK_m,      spawn,          {.v = mutecmd } },
+	{ MODKEY,                       XK_F2,     spawn,          {.v = voldowncmd } },
+	{ MODKEY,                       XK_F3,     spawn,          {.v = volupcmd } },
+	{ MODKEY|ShiftMask,             XK_F4,      spawn,          {.v = mutecmd } },
 
 	{ MODKEY,                       XK_b,          togglebar,              {0} },
 	{ MODKEY,                       XK_j,          focusstack,             {.i = +1 } },
@@ -268,10 +299,10 @@ static const Key keys[] = {
 	{ MODKEY|ShiftMask,             XK_comma,      tagmon,                 {.i = -1 } },
 	{ MODKEY|ShiftMask,             XK_period,     tagmon,                 {.i = +1 } },
 	{ MODKEY|ControlMask,           XK_minus,      setborderpx,            {.i = -1 } },
-	{ MODKEY|ControlMask,           XK_plus,       setborderpx,            {.i = +1 } },
+	{ MODKEY|ShiftMask|ControlMask,           XK_plus,       setborderpx,            {.i = +1 } },
 	{ MODKEY|ControlMask,           XK_numbersign, setborderpx,            {.i = 0 } },
 	TAGKEYS(                        XK_1,                                  0)
-	TAGKEYS(                        XK_2,                                  1)
+          TAGKEYS(                        XK_2,                                  1)
 	TAGKEYS(                        XK_3,                                  2)
 	TAGKEYS(                        XK_4,                                  3)
 	TAGKEYS(                        XK_5,                                  4)
