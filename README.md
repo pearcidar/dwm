@@ -1,4 +1,4 @@
-![dwm](dwm.png)
+<center>![dwm](dwm.png)</center>
 ============================
 ## Screenshot
 
