@@ -1,7 +1,7 @@
 <div align="center">
 	<img src="dwm.png">
 </div>
-============================
+
 ## Screenshot
 
 ![](screenshot.png)
