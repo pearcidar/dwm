@@ -1,4 +1,6 @@
-<center>![dwm](dwm.png)</center>
+<div align="center">
+	<img src="dwm.png">
+</div>
 ============================
 ## Screenshot
 
