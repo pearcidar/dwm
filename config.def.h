@@ -1,24 +1,24 @@
-/* See LICENSE file for copyright and license details. */
 
-/* appearance */
-static const unsigned int borderpx       = 2;   /* border pixel of windows */
-static const unsigned int snap           = 32;  /* snap pixel */
-static const int swallowfloating         = 0;   /* 1 means swallow floating windows by default */
-static const int scalepreview            = 4;        /* Tag preview scaling */
+/* Appearance */
+static const unsigned int borderpx       = 3;  /* border pixel of windows */
+static const unsigned int snap           = 32; /* snap pixel */
+static const int swallowfloating         = 0;  /* 1 means swallow floating windows by default */
+static const int scalepreview            = 4;  /* Tag preview scaling */
 static const unsigned int gappih         = 5;  /* horiz inner gap between windows */
 static const unsigned int gappiv         = 5;  /* vert inner gap between windows */
 static const unsigned int gappoh         = 5;  /* horiz outer gap between windows and screen edge */
 static const unsigned int gappov         = 5;  /* vert outer gap between windows and screen edge */
-static const int smartgaps_fact          = 1;   /* gap factor when there is only one client; 0 = no gaps, 3 = 3x outer gaps */
+static const int smartgaps_fact          = 1;  /* gap factor when there is only one client; 0 = no gaps, 3 = 3x outer gaps */
 static const char autostartblocksh[]     = "autostart_blocking.sh";
 static const char autostartsh[]          = "autostart.sh";
 static const char dwmdir[]               = "dwm";
 static const char localshare[]           = ".local/share";
-static const int showbar                 = 1;   /* 0 means no bar */
-static const int topbar                  = 1;   /* 0 means bottom bar */
-static const int bar_height              = 0;   /* 0 means derive from font, >= 1 explicit height */
-static const int vertpad                 = 10;  /* vertical padding of bar */
-static const int sidepad                 = 10;  /* horizontal padding of bar */
+static const int showbar                 = 1;  /* 0 means no bar */
+static const int topbar                  = 1;  /* 0 means bottom bar */
+static const int bar_height              = 0;  /* 0 means derive from font, >= 1 explicit height */
+static const int vertpad                 = 10; /* vertical padding of bar */
+static const int sidepad                 = 10; /* horizontal padding of bar */
+
 /* Status is to be shown on: -1 (all monitors), 0 (a specific monitor by index), 'A' (active monitor) */
 static const int statusmon               = 'A';
 static const char buttonbar[]            = " ";
@@ -34,25 +34,51 @@ static const unsigned int maxwtab          = 600;  /* tab menu width */
 static const unsigned int maxhtab          = 23;  /* tab menu height */
 
 /* Indicators: see patch/bar_indicators.h for options */
-static int tagindicatortype              = INDICATOR_NONE;
+static int tagindicatortype              = INDICATOR_CLIENT_DOTS;
 static int tiledindicatortype            = INDICATOR_NONE;
 static int floatindicatortype            = INDICATOR_TOP_LEFT_SQUARE;
+
 static const int quit_empty_window_count = 0;   /* only allow dwm to quit if no (<= count) windows are open */
-static const char *fonts[]               = { "FantasqueSansMono Nerd Font:size=10:style=medium" };
-static const char dmenufont[]            = "FantasqueSansMono Nerd Font:size=10";
 
+/* Fonts */
+static const char *fonts[]               = { "FantasqueSansM Nerd Font:size=10:style=medium" };
+static const char dmenufont[]            = "FantasqueSansM Nerd Font:size=10";
+
+/* Colorschemes (Uncomment the one you like or add to your liking) */
+
+// Tokyo Night
+/*
 static char black[] =	 "#191724";
-static char black2[] = 	 "#1e1e2e";
-static char gray[] =     "#403c58";
-static char white[] =    "#faebd7";
-static char blue[] = 	 "#9bced7";
-static char red[] = 	 "#ea6f91";
-static char yellow[] = 	 "#f1ca93";
-static char green[] = 	 "#018993";
-static char purple[] =	 "#eabbb9";
+static char black2[] = 	 "#1f2335";
+static char gray[] =     "#44415a";
+static char white[] =    "#c0caf7";
+static char blue[] = 	 "#7aa2f7";
+static char red[] = 	 "#f7768e";
+static char yellow[] = 	 "#e0af78";
+static char green[] = 	 "#9ece6a";
+static char purple[] =	 "#bb9af7";
 static char cyan[] = 	 "#7dcfff";
+*/
 
-static const unsigned int baralpha = 0xf2;
+/* Rose Pine */
+static char black[] =	 "#090618";
+static char black2[] = 	 "#1f1f28";
+static char gray[] =     "#403c58";
+static char gray2[] =     "#56526e";
+static char gray3[] =     "#524f67";
+static char gray4[] =     "#2a283e";
+static char white[] =    "#dcd7ba";
+static char blue[] = 	 "#7e9cd8";
+static char red[] = 	 "#c34043";
+static char yellow[] = 	 "#e0af78";
+static char green[] = 	 "#98bb6c";
+static char purple[] =	 "#957fb8";
+static char cyan2[] = 	 "#7dcfff";
+static char cyan[] = 	 "#7aa89f";
+
+/* Transparency */
+
+static const unsigned int baralpha = 0xff;
 static const unsigned int borderalpha = OPAQUE;
 static const unsigned int alphas[][3] = {
 	/*                       fg      bg        border     */
@@ -69,66 +95,77 @@ static const unsigned int alphas[][3] = {
 	[SchemeScratchNorm] = { OPAQUE, baralpha, borderalpha },
 };
 
+/* Colors */
+
 static char *colors[][ColCount] = {
 	/*                       fg                bg                border                float */
 	[SchemeNorm]         = { yellow,           black,           black,               purple },
 	[SchemeSel]          = { black,            yellow,          yellow,               blue },
-	[SchemeTitleNorm]    = { green,            black,           black,               black },
-	[SchemeTitleSel]     = { blue,            black2,           black,               black },
+	[SchemeTitleNorm]    = { cyan,            gray2,           black,               black },
+	[SchemeTitleSel]     = { cyan,            gray,           black,               black },
 	[SchemeTagsNorm]     = { white,            black,           black,               black },
-	[SchemeTagsSel]      = { red,            gray,             red,                  red },
-	[SchemeHidNorm]      = { green,            black,           black,               black },
-	[SchemeHidSel]       = { cyan,             black,           black,               black },
+	[SchemeTagsSel]      = { yellow,            black2,             red,                  red },
+	[SchemeHidNorm]      = { red,            gray4,           black,               black },
+	[SchemeHidSel]       = { cyan2,             gray3,           black,               black },
 	[SchemeUrg]          = { black,           red,              red,                  red },
 	[SchemeScratchSel]  =  { black,           blue,             black,               blue },
 	[SchemeScratchNorm] =  { black,           red,              black,               green },
 };
 
+
 static const char *layoutmenu_cmd = "layoutmenu.sh";
 
+/* Scratchpads */
+static const char *scratchpadcmd[] = {"s", "kitty", "--name", "spterm", NULL};
 
-static const char *scratchpadcmd[] = {"s", "st", "-n", "spterm", NULL};
 
+/* Tags */
 static char *tagicons[][NUMTAGS] =
 {
+//  	[DEFAULT_TAGS]        = {"󰨓", "󰨓", "󰨓", "󰨓", "󰨓", "󰨓", "󰨓", "󰨓", "󰨓"},
 	[DEFAULT_TAGS]        = { "一", "二", "三", "四", "五", "六", "七", "八", "九" },
-	[ALTERNATIVE_TAGS]    = { "A", "B", "C", "D", "E", "F", "G", "H", "I" },
+//	[ALTERNATIVE_TAGS]    = { "A", "B", "C", "D", "E", "F", "G", "H", "I" },
 	[ALT_TAGS_DECORATION] = { "<1>", "<2>", "<3>", "<4>", "<5>", "<6>", "<7>", "<8>", "<9>" },
 };
 
+/* Window Rules */
 static const Rule rules[] = {
 	RULE(.wintype = WTYPE "DIALOG", .isfloating = 1)
 	RULE(.wintype = WTYPE "UTILITY", .isfloating = 1)
 	RULE(.wintype = WTYPE "TOOLBAR", .isfloating = 1)
 	RULE(.wintype = WTYPE "SPLASH", .isfloating = 1)
-	RULE(.class = "Gimp", .tags = 1 << 4, .isterminal = 1)
+	RULE(.class = "Gimp", .tags = 1 << 4, .isterminal = 1, .isfloating = 1)
 	RULE(.class = "Firefox", .tags = 1 << 7, .isterminal = 1)
 	RULE(.class = "eww", .tags = 1 << 7, .isfloating = 1, .isterminal = 1)
-	RULE(.class = "st", .tags = 1 << 7, .isterminal = 1)
-	RULE(.class = "transmission-gtk", .tags = 1 << 7, .isfloating = 1)
+	RULE(.class = "Eww", .isfloating = 1, .isterminal = 0)
+	RULE(.class = "St", .isterminal = 1)
+	RULE(.class = "kitty", .isterminal = 1)
+	RULE(.class = "transmission-gtk", .tags = 1 << 7, .isterminal = 1)
 	RULE(.class = "fontmatrix", .tags = 1 << 7, .isfloating = 1 )
 	RULE(.instance = "spterm", .scratchkey = 's', .isfloating = 1, .isterminal = 1)
 };
 
+
+/* Bar Rules */
 static const BarRule barrules[] = {
 	/* monitor   bar    alignment         widthfunc                 drawfunc                clickfunc                hoverfunc                name */
-	{ -1,        0,     BAR_ALIGN_LEFT,   width_stbutton,           draw_stbutton,          click_stbutton,          NULL,                    "statusbutton" },
+//	{ -1,        0,     BAR_ALIGN_LEFT,   width_stbutton,           draw_stbutton,          click_stbutton,          NULL,                    "statusbutton" },
 //	{  0,        0,     BAR_ALIGN_LEFT,   width_pwrl_tags,          draw_pwrl_tags,         click_pwrl_tags,         NULL,                    "powerline_tags" },
 	{ -1,        0,     BAR_ALIGN_LEFT,   width_tags,               draw_tags,              click_tags,              hover_tags,              "tags" },
 	{  0,        0,     BAR_ALIGN_RIGHT,  width_systray,            draw_systray,           click_systray,           NULL,                    "systray" },
-	{ -1,        0,     BAR_ALIGN_LEFT,   width_ltsymbol,           draw_ltsymbol,          click_ltsymbol,          NULL,                    "layout" },
+	{ -1,        0,     BAR_ALIGN_RIGHT,   width_ltsymbol,           draw_ltsymbol,          click_ltsymbol,          NULL,                    "layout" },
 	{ statusmon, 0,     BAR_ALIGN_RIGHT,  width_status2d,           draw_status2d,          click_statuscmd,         NULL,                    "status2d" },
 	{ -1,        0,     BAR_ALIGN_NONE,   width_awesomebar,         draw_awesomebar,        click_awesomebar,        NULL,                    "awesomebar" },
 };
 
-/* layout(s) */
+
+/* Tile Settings */
 static const float mfact     = 0.5; /* factor of master area size [0.05..0.95] */
 static const int nmaster     = 1;    /* number of clients in master area */
 static const int resizehints = 0;    /* 1 means respect size hints in tiled resizals */
 static const int lockfullscreen = 1; /* 1 will force focus on the fullscreen window */
 
-
-
+/* Layouts */
 static const Layout layouts[] = {
 	/* symbol     arrange function */
 	{ "[T]",      tile },    /* first entry is default */
@@ -139,7 +176,7 @@ static const Layout layouts[] = {
 };
 
 
-/* key definitions */
+/* Key Definitions */
 #define MODKEY Mod4Mask
 #define TAGKEYS(KEY,TAG) \
 	{ MODKEY,                       KEY,      view,           {.ui = 1 << TAG} }, \
@@ -147,32 +184,34 @@ static const Layout layouts[] = {
 	{ MODKEY|ShiftMask,             KEY,      tag,            {.ui = 1 << TAG} }, \
 	{ MODKEY|ControlMask|ShiftMask, KEY,      toggletag,      {.ui = 1 << TAG} },
 
-/* helper for spawning shell commands in the pre dwm-5.0 fashion */
+/* Helper to spawn shellcommands, use "SHCMD(<command>)" */
 #define SHCMD(cmd) { .v = (const char*[]){ "/bin/sh", "-c", cmd, NULL } }
 
 /* commands */
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
 
+
+/* Dmenu Settings */
 static const char *dmenucmd[] = {
 	"dmenu_run",
 	"-m", dmenumon,
 	"-h",  "15",
-	"-bw", "4",
-	"-p",  " ",
-	"-l",  "20",
-	"-c",
-	"-Y",  "-3",
-	"-X",  "0",
-	"-fn", "FantasqueSansMono Nerd Font:pixelsize=15",
-	"-b",
-	"-sb", gray,
-	"-Y",  "-3",
+	"-bw", "3",
+        "-W",  "350",
+	"-p",  "󰛔 ",
+	"-l",  "15",
+	"-Y",  "451",
+	"-X",  "1013",
+	"-fn", "FantasqueSansM Nerd Font:pixelsize=14:style=bold italic",
+	"-sb", "#e6c384",
 	"-nf", white,
 	"-sf", black,
 	NULL
 };
-static const char *termcmd[]  = { "st", NULL };
-static const char *browsecmd[] = { "librewolf", NULL };
+
+/* General Program Variables */
+static const char *termcmd[]  = { "kitty", NULL };
+static const char *browsecmd[] = { "firefox", NULL };
 static const char *soundcontrolcmd[] = { "pavucontrol", NULL };
 static const char *scrotcmd[] = { "scrot", NULL };
 static const char *mutecmd[] = { "pactl", "set-sink-mute", "0", "toggle", NULL };
@@ -182,31 +221,27 @@ static const char *voldowncmd[] = { "pactl", "set-sink-volume", "0", "-5%", NULL
 /* This defines the name of the executable that handles the bar (used for signalling purposes) */
 #define STATUSBAR "slstatus"
 
+
+/* Key Bindings */
 static const Key keys[] = {
-	/* modifier                     key            function                argument */
+	/* modifier                     key        function                argument */
 	{ MODKEY,                       XK_p,          spawn,                  {.v = dmenucmd } },
-	{ MODKEY,             		XK_Return,     spawn,                  {.v = termcmd } },
+	{ MODKEY,             		    XK_Return,     spawn,                  {.v = termcmd } },
+	{ MODKEY|ShiftMask,             XK_s,          spawn,                  {.v = soundcontrolcmd } },
+    { MODKEY|ShiftMask,             XK_p,          spawn,                  {.v = scrotcmd } },
+    { MODKEY,                       XK_w,          spawn,                  {.v = browsecmd } },
+    { Mod1Mask,                     XK_l,          spawn,                  SHCMD("emacsclient -c -a 'emacs'") },
+    { Mod1Mask|ShiftMask,           XK_w,          spawn,                  SHCMD("nitrogen") },
 
-	{ MODKEY|ShiftMask,             XK_s,          spawn,          {.v = soundcontrolcmd } },
-        { MODKEY|ShiftMask,             XK_p,          spawn,          {.v = scrotcmd } },
-        { MODKEY,                       XK_w,         spawn,          {.v = browsecmd } },
-        { Mod1Mask|ShiftMask,           XK_d,      spawn,          SHCMD("st -e nvim /home/pear/.config/dwm/config.h") },
-        { Mod1Mask|ShiftMask,           XK_s,      spawn,          SHCMD("st -e nvim /home/pear/.config/slstatus/config.h") },
-        { Mod1Mask,                     XK_w,      spawn,          SHCMD("sh /home/pear/.files/scripts/setwal.sh") },
-        { Mod1Mask,                     XK_p,      spawn,          SHCMD("emacsclient -c 'emacs'") },
-        { Mod1Mask|ShiftMask,           XK_p,      spawn,          SHCMD("emacs --daemon") },
-        { Mod1Mask,                     XK_m,      spawn,          SHCMD("st -e ncmpcpp") },
-        { Mod1Mask|ShiftMask,           XK_w,      spawn,          SHCMD("nitrogen") },
-        { Mod1Mask,                     XK_f,      spawn,          SHCMD("st -e lfub") },
-        { Mod1Mask,                     XK_r,      spawn,          SHCMD("killall slstatus && slstatus") },
-        { Mod1Mask,                     XK_b,      spawn,          SHCMD("buckle") },
-        { Mod1Mask,                     XK_t,      spawn,          SHCMD("st -e nvim") },
-        { Mod1Mask|ShiftMask,           XK_b,      spawn,          SHCMD("killall buckle") },
+    /* Restart Slstatus */
+    { Mod1Mask,                     XK_r,          spawn,                  SHCMD("killall slstatus && slstatus") },
 
-	{ MODKEY,                       XK_F5,     spawn,          {.v = voldowncmd } },
-	{ MODKEY,                       XK_F6,     spawn,          {.v = volupcmd } },
-	{ MODKEY|ShiftMask,             XK_m,      spawn,          {.v = mutecmd } },
+    /* Volume Controls */
+	{ MODKEY,                       XK_F2,         spawn,                  {.v = voldowncmd } },
+	{ MODKEY,                       XK_F3,         spawn,                  {.v = volupcmd } },
+	{ MODKEY|ShiftMask,             XK_F4,         spawn,                  {.v = mutecmd } },
 
+    /* Master-Stack Control */
 	{ MODKEY,                       XK_b,          togglebar,              {0} },
 	{ MODKEY,                       XK_j,          focusstack,             {.i = +1 } },
 	{ MODKEY,                       XK_k,          focusstack,             {.i = -1 } },
@@ -214,11 +249,15 @@ static const Key keys[] = {
 	{ MODKEY|Mod1Mask,              XK_k,          rotatestack,            {.i = -1 } },
 	{ MODKEY,                       XK_i,          incnmaster,             {.i = +1 } },
 	{ MODKEY,                       XK_d,          incnmaster,             {.i = -1 } },
+
+    /* Window Size manipulation in layouts */
 	{ MODKEY,                       XK_h,          setmfact,               {.f = -0.05} },
 	{ MODKEY,                       XK_l,          setmfact,               {.f = +0.05} },
 	{ MODKEY|ShiftMask,             XK_h,          setcfact,               {.f = +0.25} },
 	{ MODKEY|ShiftMask,             XK_l,          setcfact,               {.f = -0.25} },
 	{ MODKEY|ShiftMask,             XK_o,          setcfact,               {0} },
+
+    /* Move Floating Windows */
 	{ MODKEY,   	                XK_Down,       moveresize,             {.v = "0x 25y 0w 0h" } },
 	{ MODKEY,   	                XK_Up,         moveresize,             {.v = "0x -25y 0w 0h" } },
 	{ MODKEY,   	                XK_Right,      moveresize,             {.v = "25x 0y 0w 0h" } },
@@ -227,9 +266,12 @@ static const Key keys[] = {
 	{ MODKEY|Mod1Mask|ShiftMask,    XK_Up,         moveresize,             {.v = "0x 0y 0w -25h" } },
 	{ MODKEY|Mod1Mask|ShiftMask,    XK_Right,      moveresize,             {.v = "0x 0y 25w 0h" } },
 	{ MODKEY|Mod1Mask|ShiftMask,    XK_Left,       moveresize,             {.v = "0x 0y -25w 0h" } },
+
 	{ MODKEY|ShiftMask,             XK_j,          movestack,              {.i = +1 } },
 	{ MODKEY|ShiftMask,             XK_k,          movestack,              {.i = -1 } },
 	{ MODKEY,                       XK_Return,     zoom,                   {0} },
+
+    /* Vanitygaps Controls */
 	{ MODKEY|Mod1Mask,              XK_u,          incrgaps,               {.i = +1 } },
 	{ MODKEY|Mod1Mask|ShiftMask,    XK_u,          incrgaps,               {.i = -1 } },
 	{ MODKEY|Mod1Mask,              XK_i,          incrigaps,              {.i = +1 } },
@@ -246,32 +288,53 @@ static const Key keys[] = {
 	{ MODKEY|Mod1Mask|ShiftMask,    XK_9,          incrovgaps,             {.i = -1 } },
 	{ MODKEY|Mod1Mask,              XK_0,          togglegaps,             {0} },
 	{ MODKEY|Mod1Mask|ShiftMask,    XK_0,          defaultgaps,            {0} },
+
+    /* Alt-tab lol */
 	{ Mod1Mask,                     XK_Tab,        alttabstart,            {0} },
+
 	{ MODKEY|ControlMask,           XK_z,          showhideclient,         {0} },
+
+    /* Kill Window */
 	{ MODKEY|ShiftMask,             XK_q,          killclient,             {0} },
+
+    /* Exit Dwm / Restart Dwm Respectively */
 	{ MODKEY|ShiftMask,             XK_e,          quit,                   {0} },
-	{ MODKEY|ShiftMask,	        XK_r,          quit,                   {1} },
+	{ MODKEY|ShiftMask,	            XK_r,          quit,                   {1} },
+
+    /* Not used */
 	{ MODKEY|ShiftMask,             XK_F5,         xrdb,                   {.v = NULL } },
+
+    /* Set Tile, Floating and Monacle Layout */
 	{ MODKEY,                       XK_t,          setlayout,              {.v = &layouts[0]} },
 	{ MODKEY,                       XK_f,          setlayout,              {.v = &layouts[1]} },
 	{ MODKEY,                       XK_m,          setlayout,              {.v = &layouts[2]} },
 	{ MODKEY,                       XK_space,      setlayout,              {0} },
 	{ MODKEY|ShiftMask,             XK_space,      togglefloating,         {0} },
+
+    /* Toggle Scatchpads on and off */
 	{ MODKEY,                       XK_grave,      togglescratch,          {.v = scratchpadcmd } },
 	{ MODKEY|ControlMask,           XK_grave,      setscratch,             {.v = scratchpadcmd } },
 	{ MODKEY|ShiftMask,             XK_grave,      removescratch,          {.v = scratchpadcmd } },
+
+    /* Stick Windows */
 	{ MODKEY|ShiftMask|ControlMask, XK_s,          togglesticky,           {0} },
+
+    /* Monitor / Tag manipulation */
 	{ MODKEY,                       XK_0,          view,                   {.ui = ~0 } },
 	{ MODKEY|ShiftMask,             XK_0,          tag,                    {.ui = ~0 } },
 	{ MODKEY,                       XK_comma,      focusmon,               {.i = -1 } },
 	{ MODKEY,                       XK_period,     focusmon,               {.i = +1 } },
 	{ MODKEY|ShiftMask,             XK_comma,      tagmon,                 {.i = -1 } },
 	{ MODKEY|ShiftMask,             XK_period,     tagmon,                 {.i = +1 } },
+
+    /* Change Borderpx during Runtime */
 	{ MODKEY|ControlMask,           XK_minus,      setborderpx,            {.i = -1 } },
-	{ MODKEY|ControlMask,           XK_plus,       setborderpx,            {.i = +1 } },
+	{ MODKEY|ShiftMask|ControlMask, XK_plus,       setborderpx,            {.i = +1 } },
 	{ MODKEY|ControlMask,           XK_numbersign, setborderpx,            {.i = 0 } },
+
+    /* Tags */
 	TAGKEYS(                        XK_1,                                  0)
-	TAGKEYS(                        XK_2,                                  1)
+    TAGKEYS(                        XK_2,                                  1)
 	TAGKEYS(                        XK_3,                                  2)
 	TAGKEYS(                        XK_4,                                  3)
 	TAGKEYS(                        XK_5,                                  4)
@@ -281,12 +344,12 @@ static const Key keys[] = {
 	TAGKEYS(                        XK_9,                                  8)
 };
 
-/* button definitions */
+/* Button Definitions */
 /* click can be ClkTagBar, ClkLtSymbol, ClkStatusText, ClkWinTitle, ClkClientWin, or ClkRootWin */
 static const Button buttons[] = {
 	/* click                event mask           button          function        argument */
 	{ ClkButton,            0,                   Button1,        spawn,          SHCMD("sh -c ~/.files/scripts/xmenu.sh") },
-//	{ ClkLtSymbol,          0,                   Button1,        setlayout,      {0} },
+	{ ClkLtSymbol,          0,                   Button1,        setlayout,      {0} },
 	{ ClkLtSymbol,          0,                   Button1,        spawn,          SHCMD("sh -c ~/.files/reps/dwm/dwm-final/layoutmenu.sh") },
 	{ ClkLtSymbol,          0,                   Button3,        layoutmenu,     {0} },
 	{ ClkWinTitle,          0,                   Button1,        togglewin,      {0} },
