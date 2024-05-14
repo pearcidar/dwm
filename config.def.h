@@ -46,9 +46,6 @@ static const char dmenufont[]            = "FantasqueSansM Nerd Font:size=10";
 /* Colorschemes (Uncomment the one you like or add to your liking) */
 
 // Tokyo Night
-static const char *fonts[]               = { "FantasqueSansM Nerd Font:size=10:style=medium" };
-static const char dmenufont[]            = "FantasqueSansM Nerd Font:size=10";
-
 /*
 static char black[] =	 "#191724";
 static char black2[] = 	 "#1f2335";
