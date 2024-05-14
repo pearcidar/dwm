@@ -1,9 +1,17 @@
 
+<<<<<<< HEAD
 /* Appearance */
 static const unsigned int borderpx       = 3;  /* border pixel of windows */
 static const unsigned int snap           = 32; /* snap pixel */
 static const int swallowfloating         = 0;  /* 1 means swallow floating windows by default */
 static const int scalepreview            = 4;  /* Tag preview scaling */
+=======
+/* appearance */
+static const unsigned int borderpx       = 3;   /* border pixel of windows */
+static const unsigned int snap           = 32;  /* snap pixel */
+static const int swallowfloating         = 0;   /* 1 means swallow floating windows by default */
+static const int scalepreview            = 4;        /* Tag preview scaling */
+>>>>>>> 4c4fdc125c2460860a4e0caaff450feabd70f2b6
 static const unsigned int gappih         = 5;  /* horiz inner gap between windows */
 static const unsigned int gappiv         = 5;  /* vert inner gap between windows */
 static const unsigned int gappoh         = 5;  /* horiz outer gap between windows and screen edge */
@@ -39,6 +47,7 @@ static int tiledindicatortype            = INDICATOR_NONE;
 static int floatindicatortype            = INDICATOR_TOP_LEFT_SQUARE;
 
 static const int quit_empty_window_count = 0;   /* only allow dwm to quit if no (<= count) windows are open */
+<<<<<<< HEAD
 
 /* Fonts */
 static const char *fonts[]               = { "FantasqueSansM Nerd Font:size=10:style=medium" };
@@ -47,6 +56,11 @@ static const char dmenufont[]            = "FantasqueSansM Nerd Font:size=10";
 /* Colorschemes (Uncomment the one you like or add to your liking) */
 
 // Tokyo Night
+=======
+static const char *fonts[]               = { "FantasqueSansM Nerd Font:size=10:style=medium" };
+static const char dmenufont[]            = "FantasqueSansM Nerd Font:size=10";
+
+>>>>>>> 4c4fdc125c2460860a4e0caaff450feabd70f2b6
 /*
 static char black[] =	 "#191724";
 static char black2[] = 	 "#1f2335";
@@ -60,7 +74,27 @@ static char purple[] =	 "#bb9af7";
 static char cyan[] = 	 "#7dcfff";
 */
 
+<<<<<<< HEAD
 /* Rose Pine */
+=======
+
+/*
+static char black[] =	 "#0C012c";
+static char black2[] = 	 "#0c012c";
+static char gray[] =     "#755282";
+static char gray2[] =     "#a07b80";
+static char gray3[] =     "#a07b80";
+static char gray4[] =     "#0c012c";
+static char white[] =    "#e5b0b8";
+static char blue[] = 	 "#dd6777";
+static char red[] = 	 "#923864";
+static char yellow[] = 	 "#AE5477";
+static char green[] = 	 "#8e4d77";
+static char purple[] =	 "#755282";
+static char cyan2[] = 	 "#955f8e";
+static char cyan[] = 	 "#955f83";
+*/
+>>>>>>> 4c4fdc125c2460860a4e0caaff450feabd70f2b6
 static char black[] =	 "#090618";
 static char black2[] = 	 "#1f1f28";
 static char gray[] =     "#403c58";
@@ -76,7 +110,10 @@ static char purple[] =	 "#957fb8";
 static char cyan2[] = 	 "#7dcfff";
 static char cyan[] = 	 "#7aa89f";
 
+<<<<<<< HEAD
 /* Transparency */
+=======
+>>>>>>> 4c4fdc125c2460860a4e0caaff450feabd70f2b6
 
 static const unsigned int baralpha = 0xff;
 static const unsigned int borderalpha = OPAQUE;
@@ -118,6 +155,10 @@ static const char *layoutmenu_cmd = "layoutmenu.sh";
 /* Scratchpads */
 static const char *scratchpadcmd[] = {"s", "kitty", "--name", "spterm", NULL};
 
+<<<<<<< HEAD
+=======
+static const char *scratchpadcmd[] = {"s", "kitty", "--name", "spterm", NULL};
+>>>>>>> 4c4fdc125c2460860a4e0caaff450feabd70f2b6
 
 /* Tags */
 static char *tagicons[][NUMTAGS] =
@@ -137,7 +178,10 @@ static const Rule rules[] = {
 	RULE(.class = "Gimp", .tags = 1 << 4, .isterminal = 1, .isfloating = 1)
 	RULE(.class = "Firefox", .tags = 1 << 7, .isterminal = 1)
 	RULE(.class = "eww", .tags = 1 << 7, .isfloating = 1, .isterminal = 1)
+<<<<<<< HEAD
 	RULE(.class = "Eww", .isfloating = 1, .isterminal = 0)
+=======
+>>>>>>> 4c4fdc125c2460860a4e0caaff450feabd70f2b6
 	RULE(.class = "St", .isterminal = 1)
 	RULE(.class = "kitty", .isterminal = 1)
 	RULE(.class = "transmission-gtk", .tags = 1 << 7, .isterminal = 1)
@@ -191,7 +235,13 @@ static const Layout layouts[] = {
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
 
 
+<<<<<<< HEAD
 /* Dmenu Settings */
+=======
+//dmenu_run -l 15 -fn "FantasqueSansM Nerd Font:pixelsize=14:style=bold italic" -X 1013 -W 350 -Y 451 -sb "#e6c384" -p "󰛔 "
+
+
+>>>>>>> 4c4fdc125c2460860a4e0caaff450feabd70f2b6
 static const char *dmenucmd[] = {
 	"dmenu_run",
 	"-m", dmenumon,
@@ -208,8 +258,11 @@ static const char *dmenucmd[] = {
 	"-sf", black,
 	NULL
 };
+<<<<<<< HEAD
 
 /* General Program Variables */
+=======
+>>>>>>> 4c4fdc125c2460860a4e0caaff450feabd70f2b6
 static const char *termcmd[]  = { "kitty", NULL };
 static const char *browsecmd[] = { "firefox", NULL };
 static const char *soundcontrolcmd[] = { "pavucontrol", NULL };
@@ -233,6 +286,7 @@ static const Key keys[] = {
     { Mod1Mask,                     XK_l,          spawn,                  SHCMD("emacsclient -c -a 'emacs'") },
     { Mod1Mask|ShiftMask,           XK_w,          spawn,                  SHCMD("nitrogen") },
 
+<<<<<<< HEAD
     /* Restart Slstatus */
     { Mod1Mask,                     XK_r,          spawn,                  SHCMD("killall slstatus && slstatus") },
 
@@ -240,6 +294,19 @@ static const Key keys[] = {
 	{ MODKEY,                       XK_F2,         spawn,                  {.v = voldowncmd } },
 	{ MODKEY,                       XK_F3,         spawn,                  {.v = volupcmd } },
 	{ MODKEY|ShiftMask,             XK_F4,         spawn,                  {.v = mutecmd } },
+=======
+	{ MODKEY|ShiftMask,             XK_s,          spawn,          {.v = soundcontrolcmd } },
+        { MODKEY|ShiftMask,             XK_p,          spawn,          {.v = scrotcmd } },
+        { MODKEY,                       XK_w,         spawn,          {.v = browsecmd } },
+        { Mod1Mask,                     XK_F1,      spawn,          SHCMD("kitty cmus") },
+        { Mod1Mask|ShiftMask,           XK_w,      spawn,          SHCMD("nitrogen") },
+        { Mod1Mask,                     XK_r,      spawn,          SHCMD("killall slstatus && slstatus") },
+        { Mod1Mask,                     XK_l,      spawn,          SHCMD("emacsclient -c -a 'emacs'") },
+
+	{ MODKEY,                       XK_F2,     spawn,          {.v = voldowncmd } },
+	{ MODKEY,                       XK_F3,     spawn,          {.v = volupcmd } },
+	{ MODKEY|ShiftMask,             XK_F4,      spawn,          {.v = mutecmd } },
+>>>>>>> 4c4fdc125c2460860a4e0caaff450feabd70f2b6
 
     /* Master-Stack Control */
 	{ MODKEY,                       XK_b,          togglebar,              {0} },
@@ -329,12 +396,20 @@ static const Key keys[] = {
 
     /* Change Borderpx during Runtime */
 	{ MODKEY|ControlMask,           XK_minus,      setborderpx,            {.i = -1 } },
+<<<<<<< HEAD
 	{ MODKEY|ShiftMask|ControlMask, XK_plus,       setborderpx,            {.i = +1 } },
+=======
+	{ MODKEY|ShiftMask|ControlMask,           XK_plus,       setborderpx,            {.i = +1 } },
+>>>>>>> 4c4fdc125c2460860a4e0caaff450feabd70f2b6
 	{ MODKEY|ControlMask,           XK_numbersign, setborderpx,            {.i = 0 } },
 
     /* Tags */
 	TAGKEYS(                        XK_1,                                  0)
+<<<<<<< HEAD
     TAGKEYS(                        XK_2,                                  1)
+=======
+          TAGKEYS(                        XK_2,                                  1)
+>>>>>>> 4c4fdc125c2460860a4e0caaff450feabd70f2b6
 	TAGKEYS(                        XK_3,                                  2)
 	TAGKEYS(                        XK_4,                                  3)
 	TAGKEYS(                        XK_5,                                  4)
